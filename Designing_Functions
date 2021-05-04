@@ -71,3 +71,62 @@ function make_asteroids(N::Int, pos_range = 0:200, size_range = 10:30)
                 Size(sz_rand(), sz_rand()))
         for i in 1:N]
 end
+
+
+asteroids = make_asteroids(5, 0:100, 11:25)
+
+#use defaul values
+
+asteroids= make_asteroids(5, 100:5:200, 200:10:500)
+
+
+
+#using keyword arguments
+
+function make_asteroids2(N::Int; pos_range = 0:200, size_range = 10:30)
+    pos_rand() = rand(pos_range)
+    sz_rand() = rand(size_range)
+    return [Widget("Asteroid #$i",
+                Position(pos_rand(), pos_rand()),
+                Size(sz_rand(), sz_rand()))
+        for i in 1:N]
+end
+
+
+asteroids = make_asteroids2(5, size_range=1:5, pos_range = 0:10:100)
+
+
+# N becomes a mandatory keyworkd arguments
+function make_asteroids3(; N::Int, pos_range = 0:200, size_range = 10:30)
+    pos_rand() = rand(pos_range)
+    sz_rand() = rand(size_range)
+    return [Widget("Asteroid #$i",
+                Position(pos_rand(), pos_rand()),
+                Size(sz_rand(), sz_rand()))
+        for i in 1:N]
+end
+
+make_asteroids3(N=3)
+
+
+
+
+# slurping
+
+# Shoot any number of targets
+function shoot(from::Widget, targets::Widget...)
+    println("Type of targets: ", typeof(targets))
+    for target in targets
+        println(from.name, " --> ", target.name)
+    end
+end
+
+
+spaceship = Widget("Spaceship", Position(0, 0), Size(30,30))
+target1 = asteroids[1]
+target2 = asteroids[2]
+target3 = asteroids[3]
+
+
+
+shoot(spaceship, target1)
